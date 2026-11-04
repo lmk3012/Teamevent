@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#b5122b">
+  <meta name="color-scheme" content="light">
+  <title>Kölle, Team und Kölsch</title>
+  <style>
+    :root {
+      --red: #b5122b;
+      --red-dark: #870b1e;
+      --red-light: #fff0f2;
+      --anthracite: #292b2f;
+      --grey: #687078;
+      --light-grey: #eef0f2;
+      --white: #ffffff;
+      --green: #157347;
+      --green-light: #e8f6ee;
+      --amber: #936000;
+      --amber-light: #fff4d6;
+      --blue: #23559c;
+      --blue-light: #eaf2ff;
+      --shadow: 0 12px 32px rgba(30, 32, 35, 0.12);
+      --radius: 20px;
+      --focus: 0 0 0 4px rgba(181, 18, 43, 0.25);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--light-grey);
+    }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--anthracite);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(181, 18, 43, 0.10), transparent 32rem),
+        linear-gradient(180deg, #fafafa 0%, var(--light-grey) 100%);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button,
+    input,
+    textarea {
+      border-radius: 12px;
+    }
+
+    button {
+      min-height: 48px;
+      border: 0;
+      cursor: pointer;
+      font-weight: 750;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+      touch-action: manipulation;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    focus-visible {
+      outline: none;
+      box-shadow: var(--focus);
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.58;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 2px solid #c7cbd0;
+      background: var(--white);
+      color: var(--anthracite);
+      padding: 14px;
+    }
+
+    textarea {
+      min-height: 112px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--red);
+      outline: none;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 12px;
+      z-index: 100;
+      background: var(--anthracite);
+      color: var(--white);
+      padding: 10px 14px;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid rgba(41, 43, 47, 0.12);
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-inner {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      border: 3px solid var(--red);
+      border-radius: 50% 50% 44% 44%;
+      position: relative;
+      background: var(--white);
+    }
+
+    .brand-mark::before,
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      bottom: 5px;
+      width: 5px;
+      height: 20px;
+      border-radius: 5px 5px 0 0;
+      background: var(--red);
+    }
+
+    .brand-mark::before {
+      left: 9px;
+      transform: rotate(5deg);
+    }
+
+    .brand-mark::after {
+      right: 9px;
+      transform: rotate(-5deg);
+    }
+
+    .brand-text {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-subtitle {
+      margin: 2px 0 0;
+      color: var(--grey);
+      font-size: 0.76rem;
+    }
+
+    .score-pill {
+      flex: 0 0 auto;
+      min-width: 92px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      text-align: center;
+      color: var(--white);
+      background: var(--anthracite);
+      font-weight: 800;
+    }
+
+    .score-pill span {
+      color: #ffdce3;
+      font-size: 1.05rem;
+    }
+
+    main {
+      width: min(100% - 24px, 920px);
+      margin: 0 auto;
+      padding: 22px 0 calc(36px + var(--safe-bottom));
+    }
+
+    .progress-shell {
+      margin-bottom: 16px;
+    }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+      color: var(--grey);
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .progress-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #d7dade;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), #df4459);
+      transition: width 300ms ease;
+    }
+
+    .screen {
+      animation: enter 260ms ease both;
+    }
+
+    .card {
+      border: 1px solid rgba(41, 43, 47, 0.09);
+      border-radius: var(--radius);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 5vw, 34px);
+    }
+
+    .hero {
+      overflow: hidden;
+      position: relative;
+      padding-top: clamp(26px, 7vw, 54px);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -80px;
+      right: -70px;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: var(--red-light);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 35px;
+      right: 28px;
+      width: 45px;
+      height: 72px;
+      border: 5px solid rgba(181, 18, 43, 0.22);
+      border-bottom: 0;
+      border-radius: 30px 30px 0 0;
+      transform: rotate(4deg);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--red);
+      font-size: 0.82rem;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.17;
+    }
+
+    h1 {
+      position: relative;
+      max-width: 680px;
+      margin: 0;
+      font-size: clamp(2rem, 8vw, 4.2rem);
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.55rem, 5vw, 2.35rem);
+      letter-spacing: -0.025em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .lead {
+      position: relative;
+      max-width: 640px;
+      margin: 12px 0 20px;
+      color: var(--grey);
+      font-size: clamp(1rem, 3.7vw, 1.25rem);
+    }
+
+    .privacy-note,
+    .info-box {
+      padding: 13px 15px;
+      border-radius: 14px;
+      background: var(--light-grey);
+      color: #444a50;
+      font-size: 0.92rem;
+    }
+
+    .station-list {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 22px 0;
+    }
+
+    .station-preview {
+      min-height: 130px;
+      padding: 16px;
+      border: 1px solid #dee1e4;
+      border-radius: 16px;
+      background: #fafafa;
+    }
+
+    .station-number {
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 10px;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--white);
+      background: var(--red);
+      font-weight: 850;
+    }
+
+    .station-preview strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .station-preview small {
+      color: var(--grey);
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .button-row > button {
+      flex: 1 1 170px;
+    }
+
+    .primary,
+    .secondary,
+    .ghost,
+    .danger {
+      padding: 12px 18px;
+    }
+
+    .primary {
+      color: var(--white);
+      background: var(--red);
+      box-shadow: 0 7px 16px rgba(181, 18, 43, 0.20);
+    }
+
+    .primary:hover:not(:disabled) {
+      background: var(--red-dark);
+    }
+
+    .secondary {
+      color: var(--white);
+      background: var(--anthracite);
+    }
+
+    .ghost {
+      border: 2px solid #c7cbd0;
+      color: var(--anthracite);
+      background: var(--white);
+    }
+
+    .danger {
+      border: 2px solid var(--red);
+      color: var(--red);
+      background: var(--white);
+    }
+
+    .full {
+      width: 100%;
+    }
+
+    .station-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .station-tab {
+      min-height: 52px;
+      padding: 8px;
+      border: 2px solid transparent;
+      color: var(--anthracite);
+      background: var(--white);
+      box-shadow: 0 4px 13px rgba(41, 43, 47, 0.07);
+      font-size: 0.82rem;
+    }
+
+    .station-tab.active {
+      border-color: var(--red);
+      color: var(--red-dark);
+      background: var(--red-light);
+    }
+
+    .station-tab.complete::after {
+      content: " ✓";
+      color: var(--green);
+    }
+
+    .station-tab.locked {
+      opacity: 0.56;
+    }
+
+    .station-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .station-header .station-number {
+      width: 44px;
+      height: 44px;
+      margin: 0;
+      flex: 0 0 auto;
+      font-size: 1.1rem;
+    }
+
+    .station-header p {
+      margin: 3px 0 0;
+      color: var(--grey);
+    }
+
+    .question-count {
+      margin-bottom: 7px;
+      color: var(--red);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .question-title {
+      margin-bottom: 18px;
+      font-size: clamp(1.35rem, 5vw, 1.9rem);
+    }
+
+    .options {
+      display: grid;
+      gap: 10px;
+    }
+
+    .option-button {
+      position: relative;
+      width: 100%;
+      min-height: 56px;
+      padding: 13px 15px;
+      border: 2px solid #d6d9dd;
+      color: var(--anthracite);
+      background: var(--white);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .option-button:hover:not(:disabled) {
+      border-color: var(--red);
+      background: var(--red-light);
+    }
+
+    .option-button.selected {
+      border-color: var(--red);
+      background: var(--red-light);
+    }
+
+    .option-button.correct {
+      border-color: var(--green);
+      background: var(--green-light);
+    }
+
+    .option-button.incorrect {
+      border-color: var(--red);
+      background: var(--red-light);
+    }
+
+    .feedback {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 5px solid var(--blue);
+      border-radius: 12px;
+      background: var(--blue-light);
+    }
+
+    .feedback.success {
+      border-color: var(--green);
+      background: var(--green-light);
+    }
+
+    .feedback.warning {
+      border-color: var(--amber);
+      background: var(--amber-light);
+    }
+
+    .feedback p:last-child {
+      margin-bottom: 0;
+    }
+
+    .error-message {
+      min-height: 24px;
+      margin: 7px 0 0;
+      color: var(--red-dark);
+      font-size: 0.9rem;
+      font-weight: 750;
+    }
+
+    .term-display,
+    .pair-display,
+    .statement-display {
+      margin: 8px 0 18px;
+      padding: clamp(18px, 6vw, 32px);
+      border-radius: 18px;
+      text-align: center;
+      background: var(--red-light);
+      color: var(--red-dark);
+      font-size: clamp(1.55rem, 7vw, 2.7rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .pair-display {
+      background: var(--anthracite);
+      color: var(--white);
+    }
+
+    .statement-display {
+      font-size: clamp(1.3rem, 5vw, 2rem);
+    }
+
+    .label {
+      display: block;
+      margin: 14px 0 7px;
+      font-weight: 800;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .mode-card {
+      padding: 20px;
+      border: 2px solid #d8dade;
+      border-radius: 18px;
+      background: var(--white);
+      text-align: left;
+    }
+
+    .mode-card:hover {
+      border-color: var(--red);
+      background: var(--red-light);
+    }
+
+    .mode-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.15rem;
+    }
+
+    .name-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .name-button {
+      min-height: 52px;
+      padding: 10px 6px;
+      border: 2px solid #d6d9dd;
+      color: var(--anthracite);
+      background: var(--white);
+    }
+
+    .name-button.selected {
+      border-color: var(--red);
+      color: var(--red-dark);
+      background: var(--red-light);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .summary-box {
+      padding: 16px;
+      border-radius: 16px;
+      background: var(--light-grey);
+    }
+
+    .summary-box strong {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--red);
+    }
+
+    .result-details {
+      margin-top: 20px;
+    }
+
+    .result-section {
+      margin-top: 16px;
+      padding: 17px;
+      border-radius: 16px;
+      background: #f6f7f8;
+    }
+
+    .result-section ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+    }
+
+    .vote-results {
+      display: grid;
+      gap: 8px;
+    }
+
+    .vote-row {
+      display: grid;
+      grid-template-columns: minmax(72px, 0.8fr) 3fr auto;
+      align-items: center;
+      gap: 9px;
+      font-size: 0.9rem;
+    }
+
+    .vote-track {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dce0e3;
+    }
+
+    .vote-fill {
+      height: 100%;
+      min-width: 0;
+      border-radius: inherit;
+      background: var(--red);
+    }
+
+    .footer-actions {
+      margin-top: 20px;
+      padding-bottom: var(--safe-bottom);
+    }
+
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .confetti-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 17px;
+      opacity: 0.92;
+      animation: fall 2.8s linear forwards;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fall {
+      to {
+        transform: translate3d(var(--drift), 110vh, 0) rotate(720deg);
+      }
+    }
+
+    @media (max-width: 660px) {
+      main {
+        width: min(100% - 16px, 920px);
+        padding-top: 14px;
+      }
+
+      .station-list,
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .station-preview {
+        min-height: auto;
+      }
+
+      .mode-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .name-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .brand-subtitle {
+        display: none;
+      }
+
+      .station-tab {
+        font-size: 0.75rem;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .header-inner {
+        padding-inline: 10px;
+      }
+
+      .brand-title {
+        max-width: 150px;
+      }
+
+      .score-pill {
+        min-width: 82px;
+        padding-inline: 9px;
+        font-size: 0.84rem;
+      }
+
+      .station-tab {
+        padding-inline: 3px;
+      }
+
+      .card {
+        padding: 17px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .confetti-layer {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#quiz-root">Direkt zum Quiz</a>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand" aria-label="Kölle, Team und Kölsch">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <div class="brand-text">
+          <p class="brand-title"><strong>Kölle, Team und Kölsch</strong></p>
+          <p class="brand-subtitle">Interaktive Köln-Tour</p>
+        </div>
+      </div>
+      <div class="score-pill" aria-live="polite">
+        Punkte: <span id="header-score">0</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="quiz-root" tabindex="-1">
+    <div id="progress-area" class="progress-shell hidden" aria-label="Tourfortschritt">
+      <div class="progress-labels">
+        <span id="progress-label">Start</span>
+        <span id="progress-percent">0 %</span>
+      </div>
+      <div
+        class="progress-track"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="0"
+        aria-labelledby="progress-label"
+      >
+        <div id="progress-fill" class="progress-fill"></div>
+      </div>
+    </div>
+
+    <nav id="station-navigation" class="station-nav hidden" aria-label="Stationsnavigation"></nav>
+
+    <section id="screen" class="screen" aria-live="polite"></section>
+
+    <div class="footer-actions">
+      <button id="reset-tour" class="danger full" type="button">
+        Tour zurücksetzen
+      </button>
+    </div>
+  </main>
+
+  <div id="confetti-layer" class="confetti-layer" aria-hidden="true"></div>
+
+  <script>
+    "use strict";
+
+    /* =========================
+       Quizdaten
+       ========================= */
+
+    const STATIONS = [
+      {
+        id: 1,
+        name: "Päffgen",
+        category: "Köln-Fragen"
+      },
+      {
+        id: 2,
+        name: "Brunne von Kölle",
+        category: "Medizin und Krankenhaus"
+      },
+      {
+        id: 3,
+        name: "Zappes",
+        category: "Team und Persönlichkeit"
+      }
+    ];
+
+    const KNOWLEDGE_QUESTIONS = {
+      1: [
+        {
+          text: "Was befindet sich auf der „Schäl Sick“?",
+          options: ["Ehrenfeld", "Deutz", "Lindenthal", "Nippes"],
+          correct: 1,
+          explanation: "„Schäl Sick“ ist die kölsche Bezeichnung für die rechtsrheinische Seite Kölns. Deutz liegt rechts des Rheins."
+        },
+        {
+          text: "Warum heißt das Kölner Bier Kölsch?",
+          options: [
+            "Weil es ursprünglich ausschließlich in der Kölner Altstadt gebraut wurde",
+            "Weil Kölsch eine geschützte Bezeichnung für Bier aus Köln und der zugelassenen Umgebung ist",
+            "Weil es traditionell nur mit Kölner Quellwasser gebraut wird",
+            "Weil der Begriff erstmals im Kölner Karneval verwendet wurde"
+          ],
+          correct: 1,
+          explanation: "Kölsch ist eine geschützte Bezeichnung, die an die Herkunft und eine bestimmte Brauart gebunden ist."
+        },
+        {
+          text: "Wie viele Kölschgläser müsste man ungefähr stapeln, um die Höhe des Kölner Doms zu erreichen?",
+          options: ["etwa 105", "etwa 1.050", "etwa 10.500", "etwa 105.000"],
+          correct: 1,
+          explanation: "Grobe Schätzung: 157 Meter geteilt durch 0,15 Meter ergibt ungefähr 1.047 Gläser. In der Praxis wäre der Stapel natürlich nicht stabil."
+        },
+        {
+          text: "Wenn Köln eine Krankenhausabteilung wäre, welche wäre es?",
+          options: ["Notaufnahme", "Psychiatrie", "Freizeitmedizin", "Karnevalsambulanz"],
+          fun: true,
+          explanations: [
+            "Notaufnahme passt: Köln ist lebhaft, spontan und irgendwie immer im Einsatz.",
+            "Psychiatrie gewählt: Köln hört zu, bleibt offen und hält auch ungewöhnliche Ideen aus.",
+            "Freizeitmedizin klingt nach einer sehr kölschen Fachrichtung mit hervorragender Work-Life-Balance.",
+            "Karnevalsambulanz ist vermutlich spätestens ab dem 11.11. im Dauereinsatz."
+          ]
+        }
+      ],
+      2: [
+        {
+          text: "Wofür steht die Abkürzung „OP“ im Krankenhaus meistens?",
+          options: ["Operationssaal", "Organisationsplan", "Orientierungsprüfung", "Ordnungspunkt"],
+          correct: 0,
+          explanation: "Im Krankenhaus steht „OP“ meistens für den Operationssaal beziehungsweise den Operationsbereich."
+        },
+        {
+          text: "Welches Gerät erstellt Schnittbilder des Körpers mithilfe von Röntgenstrahlen?",
+          options: ["EKG", "CT", "Ultraschallgerät", "Stethoskop"],
+          correct: 1,
+          explanation: "Die Computertomografie nutzt Röntgenstrahlen, um detaillierte Schnittbilder zu erzeugen."
+        },
+        {
+          text: "Welche Station betreut normalerweise besonders schwer erkrankte oder frisch operierte Patientinnen und Patienten besonders engmaschig?",
+          options: ["Intensivstation", "Cafeteria", "Verwaltung", "Physiotherapie"],
+          correct: 0,
+          explanation: "Auf einer Intensivstation werden besonders schwer erkrankte oder frisch operierte Menschen engmaschig überwacht und behandelt."
+        },
+        {
+          text: "Was ist die wichtigste Aufgabe einer Triage in einer Notaufnahme?",
+          options: [
+            "Zimmer zu verteilen",
+            "die Behandlungsdringlichkeit einzuschätzen",
+            "Speisepläne zu erstellen",
+            "Besuchszeiten festzulegen"
+          ],
+          correct: 1,
+          explanation: "Bei der Triage wird die Dringlichkeit anhand medizinischer Kriterien eingeschätzt. Die Reihenfolge richtet sich nicht einfach nach der Ankunftszeit."
+        }
+      ]
+    };
+
+    const COLOGNE_TERMS = [
+      {
+        term: "Bützje",
+        accepted: ["küsschen", "kuss", "küssen", "kuesschen", "kuessen"],
+        solution: "Küsschen oder Kuss",
+        explanation: "Ein Bützje ist ein Küsschen, im Karneval gern großzügig verteilt."
+      },
+      {
+        term: "Pänz",
+        accepted: ["kinder", "kindergruppe", "kinder gruppe"],
+        solution: "Kinder",
+        explanation: "Pänz sind Kinder. Der Begriff ist in Köln fest im alltäglichen Sprachgebrauch verankert."
+      },
+      {
+        term: "Plüschprumm",
+        accepted: ["pfirsich"],
+        solution: "Pfirsich",
+        explanation: "Die Plüschprumm ist ein Pfirsich, passend zur weichen, plüschigen Schale."
+      },
+      {
+        term: "Fisternöllche",
+        accepted: ["heimliche liebe", "verhältnis", "verhaeltnis", "liebschaft"],
+        solution: "heimliche Liebe, Verhältnis oder Liebschaft",
+        explanation: "Ein Fisternöllche bezeichnet eine heimliche Liebe oder Liebschaft."
+      },
+      {
+        term: "Kniesbüggel",
+        accepted: ["geizhals", "geiziger mensch", "geizige person"],
+        solution: "Geizhals oder geiziger Mensch",
+        explanation: "Ein Kniesbüggel hält das Geld besonders gut zusammen."
+      },
+      {
+        term: "Muckefuck",
+        accepted: ["ersatzkaffee", "ersatz kaffee", "dünner kaffee", "duenner kaffee"],
+        solution: "Ersatzkaffee oder dünner Kaffee",
+        explanation: "Muckefuck ist Ersatzkaffee oder ein besonders dünner Kaffee."
+      },
+      {
+        term: "Schwaadlappe",
+        accepted: [
+          "schwätzer",
+          "schwaetzer",
+          "jemand der viel redet",
+          "jemand, der viel redet",
+          "quasselstrippe"
+        ],
+        solution: "Schwätzer, Quasselstrippe oder jemand, der viel redet",
+        explanation: "Ein Schwaadlappe redet gern, viel und manchmal auch länger als nötig."
+      },
+      {
+        term: "Tünnes un Schäl",
+        accepted: [
+          "bekannte kölner figuren",
+          "bekannte koelner figuren",
+          "kölner figuren",
+          "koelner figuren",
+          "kölner originale",
+          "koelner originale"
+        ],
+        solution: "bekannte Kölner Figuren oder Kölner Originale",
+        explanation: "Tünnes und Schäl sind bekannte Figuren des Kölner Hänneschen-Theaters und gelten als Kölner Originale."
+      }
+    ];
+
+    const SYNERGY_PAIRS = [
+      {
+        pair: "OP + IKEA",
+        example: "Verständliche Aufbauanleitungen für medizinische Abläufe"
+      },
+      {
+        pair: "Intensivstation + McDonald’s",
+        example: "Standardisierte Prozesse unter hohem Zeitdruck"
+      },
+      {
+        pair: "Radiologie + Dating-App",
+        example: "„Es hat gematcht“ nach dem inneren Eindruck"
+      },
+      {
+        pair: "Apotheke + Flughafen",
+        example: "Klare Schalter, Warteschlangen und präzise Übergaben"
+      },
+      {
+        pair: "Notaufnahme + Oktoberfest",
+        example: "Organisation großer Menschenmengen mit sehr unterschiedlichen Bedürfnissen"
+      }
+    ];
+
+    const GET_TO_KNOW_QUESTIONS = [
+      "Was ist dein unnötigstes Talent?",
+      "Was kannst du überraschend gut, obwohl es dir absolut nichts bringt?",
+      "Welchen Beruf wolltest du als Kind haben?",
+      "Was steht weit oben auf deiner Bucket List?",
+      "Welche Kleinigkeit verbessert sofort deine Laune?",
+      "Bei welchem Thema könntest du spontan einen zehnminütigen Vortrag halten?",
+      "Welche Fähigkeit würdest du gern über Nacht lernen?",
+      "Welche Aufgabe im Team würdest du in einer Zombie-Apokalypse übernehmen?"
+    ];
+
+    const PEOPLE = [
+      "Peter",
+      "Rouven",
+      "Isabell",
+      "Charlotte",
+      "Kathrin",
+      "Pia",
+      "Noelle",
+      "Lena"
+    ];
+
+    const MOST_LIKELY_QUESTIONS = [
+      "Wer würde am ehesten spontan eine Köln-Führung übernehmen?",
+      "Wer würde am ehesten die Gruppe in der falschen Bahn wiederfinden?",
+      "Wer würde am ehesten ein Krankenhaus-Quiz gewinnen?",
+      "Wer würde am ehesten einen neuen Kölsch-Begriff erfinden?",
+      "Wer würde am ehesten aus Versehen zum Teamkapitän werden?",
+      "Wer würde am ehesten beim Karaoke als Erste oder Erster auf die Bühne gehen?",
+      "Wer würde am ehesten eine geniale Idee auf einem Bierdeckel festhalten?",
+      "Wer würde am ehesten bei einer Schnitzeljagd den entscheidenden Hinweis entdecken?",
+      "Wer würde am ehesten einen Überraschungsausflug organisieren?",
+      "Wer würde am ehesten mit einem komplett unnötigen Talent berühmt werden?"
+    ];
+
+    const STORAGE_KEY = "koelle-team-koelsch-v1";
+
+    /* =========================
+       Zustand und Speicherung
+       ========================= */
+
+    function createInitialState() {
+      return {
+        started: false,
+        screen: "home",
+        currentStation: 1,
+        unlockedStation: 1,
+        completedStations: [],
+        knowledge: {
+          1: { index: 0, answers: {}, complete: false },
+          2: { index: 0, answers: {}, complete: false }
+        },
+        cologneTerms: {
+          index: 0,
+          records: {},
+          complete: false,
+          pointAwarded: false
+        },
+        synergies: {
+          index: 0,
+          records: {},
+          complete: false,
+          pointAwarded: false
+        },
+        station3: {
+          mode: null,
+          getToKnow: {
+            index: 0,
+            answers: {},
+            complete: false
+          },
+          mostLikely: {
+            index: 0,
+            votes: {},
+            complete: false
+          },
+          complete: false
+        },
+        resultsVisible: true,
+        confettiShown: false
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      const fallback = createInitialState();
+
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+          return fallback;
+        }
+
+        const saved = JSON.parse(raw);
+        return mergeState(fallback, saved);
+      } catch (error) {
+        return fallback;
+      }
+    }
+
+    function mergeState(base, saved) {
+      if (!saved || typeof saved !== "object") {
+        return base;
+      }
+
+      return {
+        ...base,
+        ...saved,
+        knowledge: {
+          1: {
+            ...base.knowledge[1],
+            ...(saved.knowledge && saved.knowledge[1] ? saved.knowledge[1] : {})
+          },
+          2: {
+            ...base.knowledge[2],
+            ...(saved.knowledge && saved.knowledge[2] ? saved.knowledge[2] : {})
+          }
+        },
+        cologneTerms: {
+          ...base.cologneTerms,
+          ...(saved.cologneTerms || {})
+        },
+        synergies: {
+          ...base.synergies,
+          ...(saved.synergies || {})
+        },
+        station3: {
+          ...base.station3,
+          ...(saved.station3 || {}),
+          getToKnow: {
+            ...base.station3.getToKnow,
+            ...(saved.station3 && saved.station3.getToKnow
+              ? saved.station3.getToKnow
+              : {})
+          },
+          mostLikely: {
+            ...base.station3.mostLikely,
+            ...(saved.station3 && saved.station3.mostLikely
+              ? saved.station3.mostLikely
+              : {})
+          }
+        }
+      };
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (error) {
+        /* Das Quiz funktioniert auch ohne lokalen Speicher weiter. */
+      }
+    }
+
+    function resetState() {
+      state = createInitialState();
+
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        /* Kein weiterer Schritt notwendig. */
+      }
+
+      render();
+    }
+
+    /* =========================
+       Hilfsfunktionen
+       ========================= */
+
+    const screenElement = document.getElementById("screen");
+    const scoreElement = document.getElementById("header-score");
+    const progressArea = document.getElementById("progress-area");
+    const progressFill = document.getElementById("progress-fill");
+    const progressLabel = document.getElementById("progress-label");
+    const progressPercent = document.getElementById("progress-percent");
+    const progressTrack = progressArea.querySelector('[role="progressbar"]');
+    const stationNavigation = document.getElementById("station-navigation");
+    const confettiLayer = document.getElementById("confetti-layer");
+
+    function escapeHTML(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizeText(value) {
+      return String(value ?? "")
+        .trim()
+        .toLocaleLowerCase("de-DE")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/ß/g, "ss")
+        .replace(/[.,!?;:()[\]{}"'´`]/g, "")
+        .replace(/\s+/g, " ");
+    }
+
+    function isAccepted(input, accepted) {
+      const normalizedInput = normalizeText(input);
+
+      return accepted.some((solution) => {
+        const normalizedSolution = normalizeText(solution);
+        return (
+          normalizedInput === normalizedSolution ||
+          normalizedInput.includes(normalizedSolution) ||
+          normalizedSolution.includes(normalizedInput)
+        );
+      });
+    }
+
+    function getScore() {
+      let score = 0;
+
+      [1, 2].forEach((stationId) => {
+        Object.values(state.knowledge[stationId].answers || {}).forEach((answer) => {
+          if (answer && answer.correct === true && answer.fun !== true) {
+            score += 1;
+          }
+        });
+      });
+
+      if (state.cologneTerms.pointAwarded) {
+        score += 1;
+      }
+
+      if (state.synergies.pointAwarded) {
+        score += 1;
+      }
+
+      return score;
+    }
+
+    function getStationScore(stationId) {
+      let score = 0;
+
+      if (state.knowledge[stationId]) {
+        Object.values(state.knowledge[stationId].answers || {}).forEach((answer) => {
+          if (answer && answer.correct === true && answer.fun !== true) {
+            score += 1;
+          }
+        });
+      }
+
+      if (stationId === 1 && state.cologneTerms.pointAwarded) {
+        score += 1;
+      }
+
+      if (stationId === 2 && state.synergies.pointAwarded) {
+        score += 1;
+      }
+
+      return score;
+    }
+
+    function getCompletedWayTasks() {
+      let count = 0;
+
+      if (state.cologneTerms.complete) {
+        count += 1;
+      }
+
+      if (state.synergies.complete) {
+        count += 1;
+      }
+
+      return count;
+    }
+
+    function getProgress() {
+      if (!state.started) {
+        return { value: 0, label: "Start" };
+      }
+
+      if (state.screen === "finish") {
+        return { value: 100, label: "Tour geschafft" };
+      }
+
+      const stationOneKnowledge =
+        Object.keys(state.knowledge[1].answers || {}).length /
+        KNOWLEDGE_QUESTIONS[1].length;
+      const terms =
+        Object.keys(state.cologneTerms.records || {}).length /
+        COLOGNE_TERMS.length;
+      const stationTwoKnowledge =
+        Object.keys(state.knowledge[2].answers || {}).length /
+        KNOWLEDGE_QUESTIONS[2].length;
+      const synergies =
+        Object.keys(state.synergies.records || {}).length /
+        SYNERGY_PAIRS.length;
+
+      const modeProgress =
+        state.station3.mode === "mostLikely"
+          ? Object.keys(state.station3.mostLikely.votes || {}).length /
+            MOST_LIKELY_QUESTIONS.length
+          : Object.keys(state.station3.getToKnow.answers || {}).length /
+            GET_TO_KNOW_QUESTIONS.length;
+
+      const value = Math.round(
+        ((stationOneKnowledge + terms + stationTwoKnowledge + synergies + modeProgress) /
+          5) *
+          100
+      );
+
+      const activeStation = STATIONS.find(
+        (station) => station.id === state.currentStation
+      );
+
+      return {
+        value: Math.max(0, Math.min(100, value)),
+        label: activeStation
+          ? `Station ${activeStation.id}: ${activeStation.name}`
+          : "Tourfortschritt"
+      };
+    }
+
+    function updateChrome() {
+      scoreElement.textContent = String(getScore());
+
+      progressArea.classList.toggle("hidden", !state.started);
+      stationNavigation.classList.toggle("hidden", !state.started);
+
+      const progress = getProgress();
+      progressFill.style.width = `${progress.value}%`;
+      progressLabel.textContent = progress.label;
+      progressPercent.textContent = `${progress.value} %`;
+      progressTrack.setAttribute("aria-valuenow", String(progress.value));
+
+      renderStationNavigation();
+    }
+
+    function renderStationNavigation() {
+      if (!state.started) {
+        stationNavigation.innerHTML = "";
+        return;
+      }
+
+      stationNavigation.innerHTML = STATIONS.map((station) => {
+        const complete = state.completedStations.includes(station.id);
+        const locked = station.id > state.unlockedStation;
+        const active =
+          state.screen !== "finish" && state.currentStation === station.id;
+
+        return `
+          <button
+            type="button"
+            class="station-tab${active ? " active" : ""}${complete ? " complete" : ""}${locked ? " locked" : ""}"
+            data-action="open-station"
+            data-station="${station.id}"
+            ${locked ? "disabled" : ""}
+            aria-current="${active ? "step" : "false"}"
+            aria-label="Station ${station.id}: ${escapeHTML(station.name)}${complete ? ", abgeschlossen" : ""}${locked ? ", gesperrt" : ""}"
+          >
+            ${station.id}. ${escapeHTML(station.name)}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function scrollToQuizStart() {
+      window.requestAnimationFrame(() => {
+        document.getElementById("quiz-root").scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+          block: "start"
+        });
+
+        screenElement.focus({ preventScroll: true });
+      });
+    }
+
+    function setScreen(screen, stationId) {
+      state.screen = screen;
+
+      if (stationId) {
+        state.currentStation = stationId;
+      }
+
+      saveState();
+      render();
+      scrollToQuizStart();
+    }
+
+    function completeStation(stationId) {
+      if (!state.completedStations.includes(stationId)) {
+        state.completedStations.push(stationId);
+      }
+
+      state.unlockedStation = Math.max(
+        state.unlockedStation,
+        Math.min(3, stationId + 1)
+      );
+
+      saveState();
+    }
+
+    function stationHeader(stationId) {
+      const station = STATIONS.find((item) => item.id === stationId);
+
+      return `
+        <div class="station-header">
+          <span class="station-number" aria-hidden="true">${station.id}</span>
+          <div>
+            <p class="eyebrow">Station ${station.id}</p>
+            <h2>${escapeHTML(station.name)}</h2>
+            <p>${escapeHTML(station.category)}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function addListeners(selector, eventName, handler) {
+      document.querySelectorAll(selector).forEach((element) => {
+        element.addEventListener(eventName, handler);
+      });
+    }
+
+    /* =========================
+       Darstellung
+       ========================= */
+
+    function render() {
+      updateChrome();
+
+      switch (state.screen) {
+        case "station":
+          renderStation();
+          break;
+        case "knowledge":
+          renderKnowledgeQuestion();
+          break;
+        case "terms":
+          renderCologneTerm();
+          break;
+        case "synergy":
+          renderSynergy();
+          break;
+        case "station3-mode":
+          renderStation3Mode();
+          break;
+        case "get-to-know":
+          renderGetToKnow();
+          break;
+        case "most-likely":
+          renderMostLikely();
+          break;
+        case "station-overview":
+          renderStationOverview();
+          break;
+        case "finish":
+          renderFinish();
+          break;
+        case "home":
+        default:
+          renderHome();
+          break;
+      }
+
+      updateChrome();
+    }
+
+    function renderHome() {
+      progressArea.classList.add("hidden");
+      stationNavigation.classList.add("hidden");
+
+      const resumeText = state.started ? "Tour fortsetzen" : "Tour starten";
+
+      screenElement.innerHTML = `
+        <div class="card hero">
+          <p class="eyebrow">Drei Stationen. Ein Team. Jede Menge Kölle.</p>
+          <h1>Kölle, Team und Kölsch</h1>
+          <p class="lead">Unsere interaktive Köln-Tour</p>
+
+          <div class="privacy-note">
+            <strong>Datenschutz inklusive:</strong>
+            Antworten und Fortschritt bleiben ausschließlich auf diesem Gerät.
+            Es werden keine Daten versendet, getrackt oder veröffentlicht.
+          </div>
+
+          <div class="station-list" aria-label="Tourstationen">
+            ${STATIONS.map((station) => `
+              <article class="station-preview">
+                <span class="station-number" aria-hidden="true">${station.id}</span>
+                <strong>${escapeHTML(station.name)}</strong>
+                <small>${escapeHTML(station.category)}</small>
+              </article>
+            `).join("")}
+          </div>
+
+          <button id="start-tour" class="primary full" type="button">
+            ${resumeText}
+          </button>
+        </div>
+      `;
+
+      document.getElementById("start-tour").addEventListener("click", () => {
+        if (!state.started) {
+          state = createInitialState();
+          state.started = true;
+          state.screen = "station";
+          state.currentStation = 1;
+        } else if (state.screen === "home") {
+          state.screen = "station";
+        }
+
+        saveState();
+        render();
+        scrollToQuizStart();
+      });
+    }
+
+    function renderStationOverview() {
+      screenElement.innerHTML = `
+        <div class="card">
+          <p class="eyebrow">Stationsübersicht</p>
+          <h2>Wo soll es weitergehen?</h2>
+          <p>Abgeschlossene Stationen sind markiert. Die Tour bleibt auf diesem Gerät gespeichert.</p>
+
+          <div class="station-list">
+            ${STATIONS.map((station) => {
+              const complete = state.completedStations.includes(station.id);
+              const locked = station.id > state.unlockedStation;
+
+              return `
+                <article class="station-preview">
+                  <span class="station-number" aria-hidden="true">${station.id}</span>
+                  <strong>${escapeHTML(station.name)}${complete ? " ✓" : ""}</strong>
+                  <small>${escapeHTML(station.category)}</small>
+                  <button
+                    type="button"
+                    class="${locked ? "ghost" : "primary"} full"
+                    data-action="open-station"
+                    data-station="${station.id}"
+                    ${locked ? "disabled" : ""}
+                    style="margin-top:14px"
+                  >
+                    ${locked ? "Noch gesperrt" : complete ? "Erneut ansehen" : "Station öffnen"}
+                  </button>
+                </article>
+              `;
+            }).join("")}
+          </div>
+
+          ${state.completedStations.length === 3 ? `
+            <button class="secondary full" id="to-finish" type="button">
+              Zur Abschlussseite
+            </button>
+          ` : ""}
+        </div>
+      `;
+
+      bindStationButtons();
+
+      const finishButton = document.getElementById("to-finish");
+      if (finishButton) {
+        finishButton.addEventListener("click", () => setScreen("finish", 3));
+      }
+    }
+
+    function bindStationButtons() {
+      addListeners('[data-action="open-station"]', "click", (event) => {
+        const stationId = Number(event.currentTarget.dataset.station);
+
+        if (
+          Number.isInteger(stationId) &&
+          stationId >= 1 &&
+          stationId <= state.unlockedStation
+        ) {
+          setScreen("station", stationId);
+        }
+      });
+    }
+
+    function renderStation() {
+      const stationId = state.currentStation;
+
+      if (stationId === 1 || stationId === 2) {
+        const knowledgeComplete = state.knowledge[stationId].complete;
+        const wayComplete =
+          stationId === 1
+            ? state.cologneTerms.complete
+            : state.synergies.complete;
+
+        const wayTitle =
+          stationId === 1
+            ? "Kölsche Begriffe übersetzen"
+            : "Finde die Synergie";
+
+        screenElement.innerHTML = `
+          <div class="card">
+            ${stationHeader(stationId)}
+
+            <div class="info-box">
+              <strong>Ablauf:</strong>
+              Erst kommen vier Fragen, danach wartet die Wegaufgabe.
+              Pro richtiger Wissensfrage gibt es einen Punkt.
+            </div>
+
+            <div class="button-row">
+              <button id="start-knowledge" class="primary" type="button">
+                ${knowledgeComplete ? "Wissensfragen ansehen" : "Wissensfragen starten"}
+              </button>
+              <button
+                id="start-way-task"
+                class="secondary"
+                type="button"
+                ${knowledgeComplete ? "" : "disabled"}
+              >
+                ${wayComplete ? `${wayTitle} ansehen` : wayTitle}
+              </button>
+            </div>
+
+            ${knowledgeComplete && wayComplete ? `
+              <div class="feedback success">
+                <strong>Station abgeschlossen ✓</strong>
+                <p>Sehr ordentlich. Köln wäre anerkennend beeindruckt.</p>
+              </div>
+              <button id="next-station" class="primary full" type="button">
+                ${stationId === 1 ? "Weiter zu Brunne von Kölle" : "Weiter zu Zappes"}
+              </button>
+            ` : ""}
+          </div>
+        `;
+
+        document.getElementById("start-knowledge").addEventListener("click", () => {
+          state.knowledge[stationId].index = Math.min(
+            state.knowledge[stationId].index,
+            KNOWLEDGE_QUESTIONS[stationId].length - 1
+          );
+          setScreen("knowledge", stationId);
+        });
+
+        document.getElementById("start-way-task").addEventListener("click", () => {
+          setScreen(stationId === 1 ? "terms" : "synergy", stationId);
+        });
+
+        const nextButton = document.getElementById("next-station");
+        if (nextButton) {
+          nextButton.addEventListener("click", () => {
+            setScreen("station", stationId + 1);
+          });
+        }
+
+        return;
+      }
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(3)}
+
+          <div class="info-box">
+            Bei dieser Station geht es nur um gute Gespräche und ein freiwilliges Spaßspiel.
+            Es gibt keine richtigen oder falschen Persönlichkeiten und keine öffentliche Auswertung.
+          </div>
+
+          <div class="button-row">
+            <button id="choose-mode" class="primary" type="button">
+              ${state.station3.complete ? "Spielmodus erneut ansehen" : "Spielmodus auswählen"}
+            </button>
+            ${state.station3.complete ? `
+              <button id="finish-tour" class="secondary" type="button">
+                Tour abschließen
+              </button>
+            ` : ""}
+          </div>
+        </div>
+      `;
+
+      document.getElementById("choose-mode").addEventListener("click", () => {
+        setScreen("station3-mode", 3);
+      });
+
+      const finishButton = document.getElementById("finish-tour");
+      if (finishButton) {
+        finishButton.addEventListener("click", () => {
+          setScreen("finish", 3);
+        });
+      }
+    }
+
+    function renderKnowledgeQuestion() {
+      const stationId = state.currentStation;
+      const questions = KNOWLEDGE_QUESTIONS[stationId];
+      const stationState = state.knowledge[stationId];
+      const index = Math.max(
+        0,
+        Math.min(stationState.index, questions.length - 1)
+      );
+
+      stationState.index = index;
+
+      const question = questions[index];
+      const savedAnswer = stationState.answers[index];
+      const answered = Boolean(savedAnswer);
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(stationId)}
+
+          <p class="question-count">
+            Frage ${index + 1} von ${questions.length}
+          </p>
+          <h3 class="question-title">${escapeHTML(question.text)}</h3>
+
+          <div class="options" role="group" aria-label="Antwortmöglichkeiten">
+            ${question.options.map((option, optionIndex) => {
+              let className = "option-button";
+
+              if (answered && savedAnswer.selected === optionIndex) {
+                className += " selected";
+
+                if (!question.fun) {
+                  className += savedAnswer.correct ? " correct" : " incorrect";
+                }
+              }
+
+              if (
+                answered &&
+                !question.fun &&
+                optionIndex === question.correct
+              ) {
+                className += " correct";
+              }
+
+              return `
+                <button
+                  type="button"
+                  class="${className}"
+                  data-option="${optionIndex}"
+                  ${answered ? "disabled" : ""}
+                  aria-pressed="${savedAnswer && savedAnswer.selected === optionIndex ? "true" : "false"}"
+                >
+                  ${escapeHTML(option)}
+                </button>
+              `;
+            }).join("")}
+          </div>
+
+          <div id="question-feedback" aria-live="polite">
+            ${answered ? knowledgeFeedbackHTML(question, savedAnswer) : ""}
+          </div>
+
+          ${answered ? `
+            <button id="next-question" class="primary full" type="button" style="margin-top:18px">
+              ${index === questions.length - 1 ? "Weiter zur Wegaufgabe" : "Nächste Frage"}
+            </button>
+          ` : ""}
+        </div>
+      `;
+
+      if (!answered) {
+        addListeners(".option-button", "click", (event) => {
+          answerKnowledgeQuestion(Number(event.currentTarget.dataset.option));
+        });
+      }
+
+      const nextButton = document.getElementById("next-question");
+
+      if (nextButton) {
+        nextButton.addEventListener("click", () => {
+          if (index < questions.length - 1) {
+            stationState.index = index + 1;
+            saveState();
+            render();
+            scrollToQuizStart();
+          } else {
+            stationState.complete = true;
+            saveState();
+            setScreen(stationId === 1 ? "terms" : "synergy", stationId);
+          }
+        });
+      }
+    }
+
+    function answerKnowledgeQuestion(optionIndex) {
+      const stationId = state.currentStation;
+      const stationState = state.knowledge[stationId];
+      const index = stationState.index;
+      const question = KNOWLEDGE_QUESTIONS[stationId][index];
+
+      if (
+        stationState.answers[index] ||
+        !Number.isInteger(optionIndex) ||
+        optionIndex < 0 ||
+        optionIndex >= question.options.length
+      ) {
+        return;
+      }
+
+      stationState.answers[index] = {
+        selected: optionIndex,
+        correct: question.fun ? false : optionIndex === question.correct,
+        fun: Boolean(question.fun)
+      };
+
+      saveState();
+      render();
+    }
+
+    function knowledgeFeedbackHTML(question, answer) {
+      if (question.fun) {
+        return `
+          <div class="feedback">
+            <strong>Großartige Diagnose.</strong>
+            <p>${escapeHTML(question.explanations[answer.selected])}</p>
+            <p>Das war eine Spaßfrage und gibt keinen Wissenspunkt.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="feedback ${answer.correct ? "success" : "warning"}">
+          <strong>${answer.correct ? "Richtig! Ein Punkt für das Team." : "Knapp daneben, aber kölsch gelassen bleiben."}</strong>
+          <p>${escapeHTML(question.explanation)}</p>
+        </div>
+      `;
+    }
+
+    function renderCologneTerm() {
+      const taskState = state.cologneTerms;
+
+      if (taskState.complete) {
+        renderWayTaskComplete(1);
+        return;
+      }
+
+      const index = Math.max(
+        0,
+        Math.min(taskState.index, COLOGNE_TERMS.length - 1)
+      );
+
+      taskState.index = index;
+
+      const item = COLOGNE_TERMS[index];
+      const record = taskState.records[index] || {
+        attempts: 0,
+        resolved: false,
+        skipped: false,
+        shownSolution: false
+      };
+
+      const resolved = record.resolved || record.skipped || record.shownSolution;
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(1)}
+
+          <p class="question-count">
+            Wegaufgabe 1 · Begriff ${index + 1} von ${COLOGNE_TERMS.length}
+          </p>
+          <h3>Kölsche Begriffe übersetzen</h3>
+          <p>Wie lautet die hochdeutsche Übersetzung?</p>
+
+          <div class="term-display">${escapeHTML(item.term)}</div>
+
+          ${resolved ? `
+            <div class="feedback ${record.resolved ? "success" : ""}">
+              <strong>
+                ${record.resolved
+                  ? "Richtig übersetzt!"
+                  : record.skipped
+                    ? "Übersprungen und trotzdem etwas gelernt."
+                    : "Hier kommt die Auflösung."}
+              </strong>
+              <p><strong>Lösung:</strong> ${escapeHTML(item.solution)}</p>
+              <p>${escapeHTML(item.explanation)}</p>
+            </div>
+
+            <button id="next-term" class="primary full" type="button">
+              ${index === COLOGNE_TERMS.length - 1 ? "Wegaufgabe abschließen" : "Nächster Begriff"}
+            </button>
+          ` : `
+            <label class="label" for="term-answer">Eure Übersetzung</label>
+            <input
+              id="term-answer"
+              type="text"
+              autocomplete="off"
+              maxlength="120"
+              placeholder="Übersetzung eingeben"
+              aria-describedby="term-error"
+            >
+            <p id="term-error" class="error-message" role="alert"></p>
+
+            <div class="button-row">
+              <button id="check-term" class="primary" type="button">
+                Antwort prüfen
+              </button>
+              <button id="skip-term" class="ghost" type="button">
+                Überspringen
+              </button>
+              ${record.attempts >= 2 ? `
+                <button id="show-term-solution" class="secondary" type="button">
+                  Lösung anzeigen
+                </button>
+              ` : ""}
+            </div>
+
+            ${record.attempts > 0 ? `
+              <div class="feedback warning">
+                <strong>Noch nicht ganz.</strong>
+                <p>Versucht eine andere hochdeutsche Formulierung.</p>
+              </div>
+            ` : ""}
+          `}
+        </div>
+      `;
+
+      if (resolved) {
+        document.getElementById("next-term").addEventListener("click", () => {
+          moveToNextTerm();
+        });
+        return;
+      }
+
+      const input = document.getElementById("term-answer");
+
+      document.getElementById("check-term").addEventListener("click", () => {
+        const value = input.value.trim();
+        const error = document.getElementById("term-error");
+
+        if (!value) {
+          error.textContent = "Bitte gebt zuerst eine Übersetzung ein.";
+          input.focus();
+          return;
+        }
+
+        const currentRecord = taskState.records[index] || {
+          attempts: 0,
+          resolved: false,
+          skipped: false,
+          shownSolution: false
+        };
+
+        if (isAccepted(value, item.accepted)) {
+          currentRecord.resolved = true;
+          currentRecord.answer = value;
+        } else {
+          currentRecord.attempts += 1;
+          currentRecord.answer = value;
+        }
+
+        taskState.records[index] = currentRecord;
+        saveState();
+        render();
+      });
+
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          document.getElementById("check-term").click();
+        }
+      });
+
+      document.getElementById("skip-term").addEventListener("click", () => {
+        taskState.records[index] = {
+          ...record,
+          skipped: true
+        };
+        saveState();
+        render();
+      });
+
+      const showSolutionButton = document.getElementById("show-term-solution");
+      if (showSolutionButton) {
+        showSolutionButton.addEventListener("click", () => {
+          taskState.records[index] = {
+            ...record,
+            shownSolution: true
+          };
+          saveState();
+          render();
+        });
+      }
+    }
+
+    function moveToNextTerm() {
+      const taskState = state.cologneTerms;
+
+      if (taskState.index < COLOGNE_TERMS.length - 1) {
+        taskState.index += 1;
+        saveState();
+        render();
+        scrollToQuizStart();
+      } else {
+        taskState.complete = true;
+        saveState();
+        renderWayTaskComplete(1);
+      }
+    }
+
+    function renderWayTaskComplete(stationId) {
+      const isTerms = stationId === 1;
+      const taskState = isTerms ? state.cologneTerms : state.synergies;
+      const title = isTerms
+        ? "Kölsche Begriffe geschafft"
+        : "Synergien gefunden";
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(stationId)}
+
+          <div class="feedback success">
+            <strong>${title} ✓</strong>
+            <p>
+              ${isTerms
+                ? "Von Bützje bis Schwaadlappe: Das Team ist sprachlich bereit für Köln."
+                : "Aus ungewöhnlichen Kombinationen sind erstaunlich brauchbare Ideen geworden."}
+            </p>
+          </div>
+
+          <p>Wenn ihr die Wegaufgabe als Gruppe erledigt habt, könnt ihr euch einen Spaßpunkt geben.</p>
+
+          <div class="button-row">
+            <button
+              id="award-way-point"
+              class="primary"
+              type="button"
+              ${taskState.pointAwarded ? "disabled" : ""}
+            >
+              ${taskState.pointAwarded ? "Spaßpunkt vergeben ✓" : "Aufgabe geschafft"}
+            </button>
+            <button id="complete-station" class="secondary" type="button">
+              Station abschließen
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("award-way-point").addEventListener("click", () => {
+        if (!taskState.pointAwarded) {
+          taskState.pointAwarded = true;
+          saveState();
+          renderWayTaskComplete(stationId);
+          updateChrome();
+        }
+      });
+
+      document.getElementById("complete-station").addEventListener("click", () => {
+        completeStation(stationId);
+        setScreen("station", stationId);
+      });
+    }
+
+    function renderSynergy() {
+      const taskState = state.synergies;
+
+      if (taskState.complete) {
+        renderWayTaskComplete(2);
+        return;
+      }
+
+      const index = Math.max(
+        0,
+        Math.min(taskState.index, SYNERGY_PAIRS.length - 1)
+      );
+
+      taskState.index = index;
+
+      const item = SYNERGY_PAIRS[index];
+      const record = taskState.records[index];
+      const done = Boolean(record);
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(2)}
+
+          <p class="question-count">
+            Wegaufgabe 2 · ${index + 1} von ${SYNERGY_PAIRS.length}
+          </p>
+          <h3>Finde die Synergie</h3>
+
+          <div class="pair-display">${escapeHTML(item.pair)}</div>
+
+          <p><strong>Welche überraschende Gemeinsamkeit oder Geschäftsidee steckt darin?</strong></p>
+
+          ${done ? `
+            ${record.idea ? `
+              <div class="feedback success">
+                <strong>Eure Synergie</strong>
+                <p>${escapeHTML(record.idea)}</p>
+              </div>
+            ` : `
+              <div class="feedback">
+                <strong>Diskutiert und weitergezogen.</strong>
+                <p>Auch eine Idee ohne Protokoll kann großartig sein.</p>
+              </div>
+            `}
+
+            <div class="feedback">
+              <strong>Eine mögliche Beispielidee</strong>
+              <p>${escapeHTML(item.example)}</p>
+              <p>Das ist nur eine mögliche Idee und nicht die einzig richtige Lösung.</p>
+            </div>
+
+            <button id="next-pair" class="primary full" type="button">
+              ${index === SYNERGY_PAIRS.length - 1 ? "Wegaufgabe abschließen" : "Nächstes Paar"}
+            </button>
+          ` : `
+            <label class="label" for="synergy-answer">Unsere Synergie, optional</label>
+            <textarea
+              id="synergy-answer"
+              maxlength="500"
+              placeholder="Eure Idee in ein bis drei Sätzen"
+              aria-describedby="synergy-error"
+            ></textarea>
+            <p id="synergy-error" class="error-message" role="alert"></p>
+
+            <div class="button-row">
+              <button id="save-synergy" class="primary" type="button">
+                Idee speichern
+              </button>
+              <button id="skip-synergy" class="ghost" type="button">
+                Ohne Eingabe weiter
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+
+      if (done) {
+        document.getElementById("next-pair").addEventListener("click", () => {
+          if (index < SYNERGY_PAIRS.length - 1) {
+            taskState.index = index + 1;
+            saveState();
+            render();
+            scrollToQuizStart();
+          } else {
+            taskState.complete = true;
+            saveState();
+            renderWayTaskComplete(2);
+          }
+        });
+        return;
+      }
+
+      const input = document.getElementById("synergy-answer");
+
+      document.getElementById("save-synergy").addEventListener("click", () => {
+        const idea = input.value.trim();
+
+        if (!idea) {
+          document.getElementById("synergy-error").textContent =
+            "Bitte gebt eine Idee ein oder nutzt „Ohne Eingabe weiter“.";
+          input.focus();
+          return;
+        }
+
+        taskState.records[index] = {
+          idea,
+          skipped: false
+        };
+
+        saveState();
+        render();
+      });
+
+      document.getElementById("skip-synergy").addEventListener("click", () => {
+        taskState.records[index] = {
+          idea: "",
+          skipped: true
+        };
+
+        saveState();
+        render();
+      });
+    }
+
+    function renderStation3Mode() {
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(3)}
+
+          <p class="eyebrow">Spielmodus auswählen</p>
+          <h3>Wie möchtet ihr euch besser kennenlernen?</h3>
+          <p>Beide Modi sind freiwillig. Alle Eingaben bleiben nur auf diesem Gerät.</p>
+
+          <div class="mode-grid">
+            <button class="mode-card" id="mode-get-to-know" type="button">
+              <strong>Modus A: Kennenlernfragen</strong>
+              Offene Fragen mit optionalen Antworten
+            </button>
+
+            <button class="mode-card" id="mode-most-likely" type="button">
+              <strong>Modus B: Wer würde am ehesten?</strong>
+              Freiwilliges Spaßspiel mit positiver lokaler Auswertung
+            </button>
+          </div>
+
+          <button id="back-to-station" class="ghost full" type="button" style="margin-top:16px">
+            Zurück zur Station
+          </button>
+        </div>
+      `;
+
+      document.getElementById("mode-get-to-know").addEventListener("click", () => {
+        state.station3.mode = "getToKnow";
+        saveState();
+        setScreen("get-to-know", 3);
+      });
+
+      document.getElementById("mode-most-likely").addEventListener("click", () => {
+        state.station3.mode = "mostLikely";
+        saveState();
+        setScreen("most-likely", 3);
+      });
+
+      document.getElementById("back-to-station").addEventListener("click", () => {
+        setScreen("station", 3);
+      });
+    }
+
+    function renderGetToKnow() {
+      const modeState = state.station3.getToKnow;
+
+      if (modeState.complete) {
+        renderStation3Complete("getToKnow");
+        return;
+      }
+
+      const index = Math.max(
+        0,
+        Math.min(modeState.index, GET_TO_KNOW_QUESTIONS.length - 1)
+      );
+
+      modeState.index = index;
+
+      const saved = modeState.answers[index];
+      const done = Boolean(saved);
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(3)}
+
+          <p class="question-count">
+            Kennenlernfrage ${index + 1} von ${GET_TO_KNOW_QUESTIONS.length}
+          </p>
+
+          <div class="statement-display">
+            ${escapeHTML(GET_TO_KNOW_QUESTIONS[index])}
+          </div>
+
+          ${done ? `
+            <div class="feedback ${saved.answer ? "success" : ""}">
+              <strong>${saved.answer ? "Antwort lokal gespeichert." : "Frage übersprungen."}</strong>
+              ${saved.answer ? `<p>${escapeHTML(saved.answer)}</p>` : ""}
+            </div>
+
+            <button id="next-get-to-know" class="primary full" type="button">
+              ${index === GET_TO_KNOW_QUESTIONS.length - 1 ? "Modus abschließen" : "Nächste Frage"}
+            </button>
+          ` : `
+            <label class="label" for="get-to-know-answer">Antwort, optional</label>
+            <textarea
+              id="get-to-know-answer"
+              maxlength="500"
+              placeholder="Antwort nur auf diesem Gerät speichern"
+              aria-describedby="get-to-know-error"
+            ></textarea>
+            <p id="get-to-know-error" class="error-message" role="alert"></p>
+
+            <div class="button-row">
+              <button id="save-get-to-know" class="primary" type="button">
+                Antwort speichern
+              </button>
+              <button id="skip-get-to-know" class="ghost" type="button">
+                Frage überspringen
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+
+      if (done) {
+        document.getElementById("next-get-to-know").addEventListener("click", () => {
+          if (index < GET_TO_KNOW_QUESTIONS.length - 1) {
+            modeState.index = index + 1;
+            saveState();
+            render();
+            scrollToQuizStart();
+          } else {
+            modeState.complete = true;
+            state.station3.complete = true;
+            completeStation(3);
+            saveState();
+            renderStation3Complete("getToKnow");
+          }
+        });
+        return;
+      }
+
+      const input = document.getElementById("get-to-know-answer");
+
+      document.getElementById("save-get-to-know").addEventListener("click", () => {
+        const answer = input.value.trim();
+
+        if (!answer) {
+          document.getElementById("get-to-know-error").textContent =
+            "Bitte gebt eine Antwort ein oder überspringt die Frage.";
+          input.focus();
+          return;
+        }
+
+        modeState.answers[index] = {
+          answer,
+          skipped: false
+        };
+
+        saveState();
+        render();
+      });
+
+      document.getElementById("skip-get-to-know").addEventListener("click", () => {
+        modeState.answers[index] = {
+          answer: "",
+          skipped: true
+        };
+
+        saveState();
+        render();
+      });
+    }
+
+    function renderMostLikely() {
+      const modeState = state.station3.mostLikely;
+
+      if (modeState.complete) {
+        renderStation3Complete("mostLikely");
+        return;
+      }
+
+      const index = Math.max(
+        0,
+        Math.min(modeState.index, MOST_LIKELY_QUESTIONS.length - 1)
+      );
+
+      modeState.index = index;
+
+      const savedVote = modeState.votes[index];
+      const confirmed = Boolean(savedVote && savedVote.confirmed);
+      const selectedName = savedVote ? savedVote.name : "";
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(3)}
+
+          <div class="info-box">
+            Freiwilliges Spaßspiel: Bitte entscheidet freundlich und ohne persönliche oder abwertende Kommentare.
+          </div>
+
+          <p class="question-count" style="margin-top:18px">
+            Aussage ${index + 1} von ${MOST_LIKELY_QUESTIONS.length}
+          </p>
+
+          <div class="statement-display">
+            ${escapeHTML(MOST_LIKELY_QUESTIONS[index])}
+          </div>
+
+          ${confirmed ? `
+            <div class="feedback success">
+              <strong>${escapeHTML(selectedName)} wurde gewählt.</strong>
+              <p>${escapeHTML(getPositiveVoteFeedback(index, selectedName))}</p>
+            </div>
+
+            <button id="next-most-likely" class="primary full" type="button">
+              ${index === MOST_LIKELY_QUESTIONS.length - 1 ? "Auswertung anzeigen" : "Nächste Aussage"}
+            </button>
+          ` : `
+            <div class="name-grid" role="group" aria-label="Person auswählen">
+              ${PEOPLE.map((name) => `
+                <button
+                  type="button"
+                  class="name-button${selectedName === name ? " selected" : ""}"
+                  data-name="${escapeHTML(name)}"
+                  aria-pressed="${selectedName === name ? "true" : "false"}"
+                >
+                  ${escapeHTML(name)}
+                </button>
+              `).join("")}
+            </div>
+
+            <p id="vote-error" class="error-message" role="alert"></p>
+
+            <div class="button-row">
+              <button id="confirm-vote" class="primary" type="button">
+                Auswahl bestätigen
+              </button>
+              <button id="skip-vote" class="ghost" type="button">
+                Diese Frage überspringen
+              </button>
+            </div>
+          `}
+        </div>
+      `;
+
+      if (confirmed) {
+        document.getElementById("next-most-likely").addEventListener("click", () => {
+          if (index < MOST_LIKELY_QUESTIONS.length - 1) {
+            modeState.index = index + 1;
+            saveState();
+            render();
+            scrollToQuizStart();
+          } else {
+            modeState.complete = true;
+            state.station3.complete = true;
+            completeStation(3);
+            saveState();
+            renderStation3Complete("mostLikely");
+          }
+        });
+        return;
+      }
+
+      addListeners(".name-button", "click", (event) => {
+        const name = event.currentTarget.dataset.name;
+
+        modeState.votes[index] = {
+          name,
+          confirmed: false,
+          skipped: false
+        };
+
+        saveState();
+        render();
+      });
+
+      document.getElementById("confirm-vote").addEventListener("click", () => {
+        const currentVote = modeState.votes[index];
+
+        if (!currentVote || !currentVote.name) {
+          document.getElementById("vote-error").textContent =
+            "Bitte wählt zuerst einen Namen aus oder überspringt die Frage.";
+          return;
+        }
+
+        currentVote.confirmed = true;
+        saveState();
+        render();
+      });
+
+      document.getElementById("skip-vote").addEventListener("click", () => {
+        modeState.votes[index] = {
+          name: "",
+          confirmed: true,
+          skipped: true
+        };
+
+        if (index < MOST_LIKELY_QUESTIONS.length - 1) {
+          modeState.index = index + 1;
+          saveState();
+          render();
+          scrollToQuizStart();
+        } else {
+          modeState.complete = true;
+          state.station3.complete = true;
+          completeStation(3);
+          saveState();
+          renderStation3Complete("mostLikely");
+        }
+      });
+    }
+
+    function getPositiveVoteFeedback(index, name) {
+      const messages = [
+        `${name} bekommt heute schon einmal den inoffiziellen Köln-Kompass.`,
+        `${name} findet vermutlich nicht immer die richtige Bahn, aber ziemlich sicher eine gute Geschichte.`,
+        `${name} wird zur medizinischen Quizsprechstunde ernannt, ganz ohne Überweisung.`,
+        `${name} hat ab sofort die kreative Lizenz für neue kölsche Wortschöpfungen.`,
+        `${name} übernimmt Verantwortung offenbar sogar im Vorbeigehen.`,
+        `${name} bringt mutmaßlich genug Mut und Bühnenenergie für das ganze Team mit.`,
+        `${name} liefert Ideen offenbar kompakt, spontan und bierdeckeltauglich.`,
+        `${name} bekommt den Titel „Spürnase des Teams“ verliehen.`,
+        `${name} scheint Organisationstalent und Überraschungsmoment gut zu verbinden.`,
+        `${name} hat erkannt: Ein Talent muss nicht nützlich sein, um großartig zu sein.`
+      ];
+
+      return messages[index] || `${name} bringt auf jeden Fall eine besondere Stärke ins Team ein.`;
+    }
+
+    function renderStation3Complete(mode) {
+      const modeTitle =
+        mode === "mostLikely"
+          ? "Wer würde am ehesten?"
+          : "Kennenlernfragen";
+
+      screenElement.innerHTML = `
+        <div class="card">
+          ${stationHeader(3)}
+
+          <div class="feedback success">
+            <strong>${escapeHTML(modeTitle)} abgeschlossen ✓</strong>
+            <p>
+              Gute Teams wissen nicht alles übereinander, aber jetzt definitiv ein bisschen mehr.
+            </p>
+          </div>
+
+          ${mode === "mostLikely" ? renderVoteResultsHTML() : ""}
+
+          <div class="button-row">
+            <button id="finish-from-mode" class="primary" type="button">
+              Tour abschließen
+            </button>
+            <button id="other-mode" class="ghost" type="button">
+              Anderen Modus ausprobieren
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("finish-from-mode").addEventListener("click", () => {
+        state.station3.complete = true;
+        completeStation(3);
+        saveState();
+        setScreen("finish", 3);
+      });
+
+      document.getElementById("other-mode").addEventListener("click", () => {
+        setScreen("station3-mode", 3);
+      });
+    }
+
+    function getVoteCounts() {
+      const counts = Object.fromEntries(PEOPLE.map((name) => [name, 0]));
+
+      Object.values(state.station3.mostLikely.votes || {}).forEach((vote) => {
+        if (
+          vote &&
+          vote.confirmed &&
+          !vote.skipped &&
+          PEOPLE.includes(vote.name)
+        ) {
+          counts[vote.name] += 1;
+        }
+      });
+
+      return counts;
+    }
+
+    function renderVoteResultsHTML() {
+      const counts = getVoteCounts();
+      const maximum = Math.max(1, ...Object.values(counts));
+      const totalVotes = Object.values(counts).reduce(
+        (sum, count) => sum + count,
+        0
+      );
+
+      if (totalVotes === 0) {
+        return `
+          <div class="result-section">
+            <h3>Lokale Spaßauswertung</h3>
+            <p>Es wurden keine Namen bestätigt. Auch das ist vollkommen in Ordnung.</p>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="result-section">
+          <h3>Lokale Spaßauswertung</h3>
+          <p>
+            Jede Auswahl steht für eine positive Zuschreibung. Häufig oder selten gewählt
+            bedeutet ausdrücklich keine Rangliste.
+          </p>
+          <div class="vote-results">
+            ${PEOPLE.map((name) => {
+              const count = counts[name];
+              const width = Math.round((count / maximum) * 100);
+
+              return `
+                <div class="vote-row">
+                  <span>${escapeHTML(name)}</span>
+                  <div class="vote-track" aria-hidden="true">
+                    <div class="vote-fill" style="width:${width}%"></div>
+                  </div>
+                  <strong>${count}</strong>
+                </div>
+              `;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFinish() {
+      const totalScore = getScore();
+      const savedSynergies = Object.entries(state.synergies.records || {})
+        .filter(([, record]) => record && record.idea)
+        .map(([index, record]) => ({
+          pair: SYNERGY_PAIRS[Number(index)]
+            ? SYNERGY_PAIRS[Number(index)].pair
+            : "Begriffspaar",
+          idea: record.idea
+        }));
+
+      const savedIntroductions = Object.entries(
+        state.station3.getToKnow.answers || {}
+      )
+        .filter(([, record]) => record && record.answer)
+        .map(([index, record]) => ({
+          question:
+            GET_TO_KNOW_QUESTIONS[Number(index)] || "Kennenlernfrage",
+          answer: record.answer
+        }));
+
+      screenElement.innerHTML = `
+        <div class="card">
+          <p class="eyebrow">Et hätt noch immer jot jejange</p>
+          <h1>Tour geschafft!</h1>
+          <p class="lead">
+            ${getFinishMessage(totalScore)}
+          </p>
+
+          <div class="summary-grid">
+            <div class="summary-box">
+              <strong>${totalScore}</strong>
+              Gesamtpunkte
+            </div>
+            <div class="summary-box">
+              <strong>${getCompletedWayTasks()}</strong>
+              Wegaufgaben erledigt
+            </div>
+            <div class="summary-box">
+              <strong>${state.completedStations.length}</strong>
+              Stationen abgeschlossen
+            </div>
+          </div>
+
+          <button id="toggle-results" class="secondary full" type="button" aria-expanded="${state.resultsVisible}">
+            Ergebnisse ${state.resultsVisible ? "ausblenden" : "einblenden"}
+          </button>
+
+          <div id="result-details" class="result-details${state.resultsVisible ? "" : " hidden"}">
+            <div class="result-section">
+              <h3>Punkte nach Stationen</h3>
+              <ul>
+                <li><strong>Päffgen:</strong> ${getStationScore(1)} Punkte</li>
+                <li><strong>Brunne von Kölle:</strong> ${getStationScore(2)} Punkte</li>
+                <li><strong>Zappes:</strong> Teamgeist statt Punktedruck</li>
+              </ul>
+            </div>
+
+            <div class="result-section">
+              <h3>Gespeicherte Synergie-Ideen</h3>
+              ${savedSynergies.length ? `
+                <ul>
+                  ${savedSynergies.map((entry) => `
+                    <li>
+                      <strong>${escapeHTML(entry.pair)}:</strong>
+                      ${escapeHTML(entry.idea)}
+                    </li>
+                  `).join("")}
+                </ul>
+              ` : `
+                <p>Keine Synergie-Ideen gespeichert. Die besten Gedanken bleiben manchmal ohnehin am Tisch.</p>
+              `}
+            </div>
+
+            <div class="result-section">
+              <h3>Gespeicherte Kennenlernantworten</h3>
+              ${savedIntroductions.length ? `
+                <ul>
+                  ${savedIntroductions.map((entry) => `
+                    <li>
+                      <strong>${escapeHTML(entry.question)}</strong><br>
+                      ${escapeHTML(entry.answer)}
+                    </li>
+                  `).join("")}
+                </ul>
+              ` : `
+                <p>Keine Kennenlernantworten gespeichert.</p>
+              `}
+            </div>
+
+            ${renderVoteResultsHTML()}
+
+            <div class="privacy-note" style="margin-top:16px">
+              Diese Ergebnisse werden ausschließlich auf dem aktuellen Gerät angezeigt.
+              Es gibt keinen Versand, kein Tracking und keine öffentliche Rangliste.
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button id="restart-tour" class="primary" type="button">
+              Tour neu starten
+            </button>
+            <button id="overview-button" class="ghost" type="button">
+              Zur Stationsübersicht
+            </button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById("toggle-results").addEventListener("click", () => {
+        state.resultsVisible = !state.resultsVisible;
+        saveState();
+        renderFinish();
+      });
+
+      document.getElementById("restart-tour").addEventListener("click", () => {
+        const confirmed = window.confirm(
+          "Möchtet ihr die Tour wirklich neu starten? Alle lokal gespeicherten Antworten und Punkte werden gelöscht."
+        );
+
+        if (confirmed) {
+          resetState();
+        }
+      });
+
+      document.getElementById("overview-button").addEventListener("click", () => {
+        setScreen("station-overview", 3);
+      });
+
+      if (!state.confettiShown) {
+        state.confettiShown = true;
+        saveState();
+        createConfetti();
+      }
+    }
+
+    function getFinishMessage(score) {
+      if (score >= 9) {
+        return "Domhoch überlegen, aber angenehm unangeberisch. Ihr seid offiziell köln-tourtauglich.";
+      }
+
+      if (score >= 6) {
+        return "Starkes Teamwissen, gute Ideen und ausreichend kölsche Gelassenheit.";
+      }
+
+      return "Nicht jede Antwort saß, aber die Gruppe schon. Genau so gewinnt man eine Köln-Tour.";
+    }
+
+    function createConfetti() {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      confettiLayer.innerHTML = "";
+
+      const colors = ["#b5122b", "#ffffff", "#292b2f", "#e85d70", "#f3c44e"];
+
+      for (let index = 0; index < 42; index += 1) {
+        const piece = document.createElement("span");
+        piece.className = "confetti";
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.background = colors[index % colors.length];
+        piece.style.animationDelay = `${Math.random() * 0.5}s`;
+        piece.style.animationDuration = `${2.2 + Math.random() * 1.5}s`;
+        piece.style.setProperty("--drift", `${-80 + Math.random() * 160}px`);
+        piece.style.transform = `rotate(${Math.random() * 180}deg)`;
+        confettiLayer.appendChild(piece);
+      }
+
+      window.setTimeout(() => {
+        confettiLayer.innerHTML = "";
+      }, 4500);
+    }
+
+    /* =========================
+       Globale Navigation
+       ========================= */
+
+    stationNavigation.addEventListener("click", (event) => {
+      const button = event.target.closest('[data-action="open-station"]');
+
+      if (!button) {
+        return;
+      }
+
+      const stationId = Number(button.dataset.station);
+
+      if (
+        Number.isInteger(stationId) &&
+        stationId >= 1 &&
+        stationId <= state.unlockedStation
+      ) {
+        setScreen("station", stationId);
+      }
+    });
+
+    document.getElementById("reset-tour").addEventListener("click", () => {
+      const confirmed = window.confirm(
+        "Möchtet ihr die Tour wirklich zurücksetzen? Alle lokal gespeicherten Antworten, Punkte und Fortschritte werden gelöscht."
+      );
+
+      if (confirmed) {
+        resetState();
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>
